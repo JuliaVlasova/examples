@@ -1,0 +1,364 @@
+@use '../variables/colors' as *;
+@use 'breakpoint' as *;
+@use 'button' as *;
+@use 'sass:color';
+
+@mixin top-menu(
+	$style,
+	$top-button-style: 'button-orange',
+	$menu-form-button: 'button-orange',
+	$border-line: false,
+	$menu-form-border-line: false
+) {
+	.top-menu__download {
+		@if ($border-line == true) {
+			@include button('sm', $top-button-style, $border-line: true);
+			@if ($style == 'top-menu-light') {
+				color: map-get($colors, 'main');
+			} @else if($style == 'top-menu-dark') {
+				color: map-get($colors, 'white');
+			}
+		} @else {
+			@include button('sm', $top-button-style, $border-line);
+		}
+
+		@include breakpointUi(lt-md) {
+			display: none;
+		}
+	}
+
+	.top-menu__form-mobile input[type='button'] {
+		@include breakpointUi(lt-lg) {
+			@include button('sm', $menu-form-button, $menu-form-border-line);
+		}
+	}
+
+	@if ($style == 'top-menu-dark') {
+		.top-wrapper {
+			background: map-get($colors, 'header-dark');
+			margin-bottom: -1px;
+		}
+
+		.top-menu {
+			@include menu-color(
+				map-get($colors, 'menu-light'),
+				//menu items
+				map-get($colors, 'white'),
+				//menu items active
+				map-get($colors, 'wa-tool'),
+				//menu items hover
+				map-get($colors, 'button-orange'),
+				//menu items hover border
+				map-get($colors, 'white') //logo text color
+			);
+
+			@include lang-color(
+				#182e53,
+				//background of hidden-list
+				map-get($colors, 'white'),
+				//color of items in hidden-list
+				map-get($colors, 'white'),
+				//background-mobile
+				map-get($colors, 'secondary-dark') //color mobile
+			);
+
+			&__search-icon {
+				fill: map-get($colors, 'menu-light');
+			}
+		}
+
+		@include menu-mobile(
+			map-get($colors, 'white'),
+			//lang-mobile color
+			map-get($colors, 'sep-wa'),
+			//lang-mobile active color
+			map-get($colors, 'white'),
+			//search-icon color
+			map-get($colors, 'white') //menu-box color
+		);
+
+		@include active-search(
+			map-get($colors, 'white'),
+			//search text color
+			map-get($colors, 'white-6'),
+			//search background active color
+			map-get($colors, 'white-24'),
+			//search border color
+			map-get($colors, 'white-36') // search placeholder color
+		);
+
+		#h-close-icon {
+			circle {
+				fill: map-get($colors, 'white-18');
+			}
+
+			path {
+				fill: map-get($colors, 'white');
+			}
+		}
+	} @else if ($style == 'top-menu-light') {
+		.top-wrapper {
+			background: map-get($colors, 'white');
+			margin-bottom: -1px;
+		}
+
+		.top-menu {
+			@include menu-color(
+				map-get($colors, 'black-60'),
+				//menu items
+				map-get($colors, 'main'),
+				//menu items active
+				map-get($colors, 'wa-tool'),
+				//menu items hover
+				map-get($colors, 'button-orange'),
+				//menu items hover border
+				map-get($colors, 'main') //logo text color
+			);
+
+			@include lang-color(
+				map-get($colors, 'white'),
+				//background of hidden-list
+				map-get($colors, 'main'),
+				//color of items in hidden-list
+				map-get($colors, 'white'),
+				//background-mobile
+				map-get($colors, 'secondary-dark') //color mobile
+			);
+
+			&__search-icon {
+				fill: map-get($colors, 'black-60');
+			}
+		}
+
+		@include menu-mobile(
+			map-get($colors, 'main'),
+			//lang-mobile color
+			map-get($colors, 'sep-wa'),
+			//lang-mobile active color
+			map-get($colors, 'main'),
+			//search-icon color
+			map-get($colors, 'main') //menu-box color
+		);
+
+		@include active-search(
+			map-get($colors, 'main'),
+			//search text color
+			map-get($colors, 'black-3'),
+			//search background active color
+			map-get($colors, 'black-12'),
+			//search border color
+			map-get($colors, 'black-36') // search placeholder color
+		);
+
+		#h-close-icon {
+			circle {
+				fill: map-get($colors, 'black-12');
+			}
+
+			path {
+				fill: map-get($colors, 'main');
+			}
+		}
+	}
+}
+
+@mixin menu-color($color, $active-color, $hover-color, $border-background, $logo-text-color) {
+	.top-menu {
+		&__logo-link {
+			.h-logo {
+				fill: $logo-text-color;
+			}
+		}
+	}
+
+	@include breakpointUi(gt-md) {
+		.top-menu {
+			&__item {
+				color: $color;
+
+				&:hover,
+				&:focus {
+					color: $hover-color;
+
+					&::before {
+						background: $border-background;
+					}
+				}
+
+				&_active {
+					color: $active-color;
+
+					&:hover,
+					&:focus {
+						color: $hover-color;
+
+						&::before {
+							background: $border-background;
+						}
+
+						.top-dropdown__arrow {
+							fill: $hover-color;
+						}
+					}
+
+					.top-dropdown__arrow {
+						fill: $active-color;
+					}
+				}
+			}
+		}
+
+		.top-dropdown {
+			color: $color;
+
+			&:hover,
+			&:focus {
+				color: $hover-color;
+
+				.top-dropdown__arrow {
+					fill: $hover-color;
+				}
+			}
+
+			.top-dropdown__arrow {
+				fill: $color;
+			}
+
+			&_active-desktop {
+				color: $active-color;
+
+				&:hover,
+				&:focus {
+					color: $hover-color;
+
+					.top-dropdown__arrow {
+						fill: $hover-color;
+					}
+				}
+
+				.top-dropdown__arrow {
+					fill: $active-color;
+				}
+			}
+
+			.top-dropdown__inner {
+				&::before {
+					background: $border-background;
+				}
+			}
+		}
+	}
+
+	@include breakpointUi(gt-sm) {
+		.top-menu {
+			&__lang-current {
+				color: $color;
+
+				.top-dropdown__arrow {
+					fill: $color;
+				}
+
+				&:hover,
+				&:focus {
+					color: $hover-color;
+
+					.top-dropdown__arrow {
+						fill: $hover-color;
+					}
+				}
+			}
+
+			&__hidden-list {
+				&:hover {
+					& + .top-menu__lang-current {
+						color: $hover-color;
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin lang-color($background, $color, $background-mobile, $color-mobile) {
+	.top-menu__hidden-list {
+		background: $background;
+
+		@include breakpointUi(lt-md) {
+			background: $background-mobile;
+		}
+
+		li {
+			color: $color;
+
+			@include breakpointUi(lt-md) {
+				color: $color-mobile;
+			}
+		}
+
+		a {
+			color: $color;
+
+			@include breakpointUi(lt-md) {
+				color: $color-mobile;
+			}
+		}
+	}
+}
+
+@mixin menu-mobile($lang-mobile-color, $lang-mobile-active-color, $search-icon-color, $menu-box-color) {
+	.top-menu {
+		&__lang-mobile {
+			.h-lang-mobile {
+				@include breakpointUi(lt-md) {
+					fill: $lang-mobile-color;
+				}
+
+				&_active {
+					@include breakpointUi(lt-md) {
+						fill: $lang-mobile-active-color;
+					}
+				}
+			}
+		}
+
+		&__search-icon {
+			@include breakpointUi(lt-md) {
+				fill: $search-icon-color;
+			}
+		}
+	}
+
+	.top-menu-box {
+		&__inner {
+			@include breakpointUi(lt-lg) {
+				background: $menu-box-color;
+			}
+		}
+
+		&::before,
+		&::after {
+			@include breakpointUi(lt-lg) {
+				background: $menu-box-color;
+			}
+		}
+	}
+}
+
+@mixin active-search($color, $background-active, $border-color, $placeholder) {
+	.top-menu {
+		&__search-field {
+			color: $color;
+
+			&_active {
+				background: $background-active;
+				border: 1px solid $border-color;
+			}
+
+			&::-moz-placeholder,
+			&:-ms-input-placeholder,
+			&::-webkit-input-placeholder {
+				color: $placeholder;
+			}
+		}
+	}
+}

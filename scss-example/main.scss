@@ -1,0 +1,9 @@
+// This bundle should load in first.
+// This bundle contains styles for a first screen.
+
+@use "base/normalize-new" as *;
+@use "base/layout" as *;
+@use "base/links" as *;
+@use "base/text" as *;
+@use "base/lang" as *;
+@use "abstracts/.env" as *;

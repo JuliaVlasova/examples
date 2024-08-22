@@ -1,0 +1,178 @@
+@use "../../variables/colors" as *;
+@use "../../mixins/mixins" as *;
+@use "../../mixins/top-menu" as *;
+
+$custom-background: #001440;
+$p-section-margin-y-xs: 50px;
+
+@include top-menu('top-menu-dark', 'sep-rt', $border-line: true);
+
+.sale-banner {
+  display: none !important;
+
+  img {
+    display: none !important;
+  }
+}
+
+body:not(.fp-viewing-block1) {
+  padding-top: 0 !important;
+}
+
+.top-video-bg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -53%);
+  z-index: 1;
+  width: 100%;
+  height: auto;
+
+  @include breakpointUi(lt-md) {
+    margin-top: 116px;
+  }
+}
+
+#firstScreenVideo {
+  display: none;
+}
+
+.top-wrapper {
+  background: $custom-background;
+}
+
+.main-container {
+  background: $custom-background;
+
+  @include breakpointUi(lt-md) {
+    overflow: hidden;
+  }
+}
+
+.first-screen {
+  position: relative;
+
+  @include breakpointUi(gt-md) { 
+    padding: 1px 0 230px;
+  }
+
+  @include breakpointUi(md) {
+    padding: 1px 0 217px;
+  }
+
+  @include breakpointUi(lt-md) {
+    padding: 1px 0 220px;
+    overflow: hidden;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 20;
+
+    .heading {
+      max-width: 704px;
+      text-align: center;
+      position: relative;
+
+      @include breakpointUi(gt-md) {
+        max-height: 180px;
+        margin: 167px auto $p-section-margin-y-xs;
+      }
+
+      @include breakpointUi(md) {
+        margin: 98px auto 40px;
+      }
+
+      @include breakpointUi(lt-md) {
+        margin: 56px auto 40px;
+        max-width: 320px;
+      }
+
+      .title {
+        @include heading('1-extra');
+        color: map-get($colors, 'white');
+        margin-bottom: 20px;
+
+        @include breakpointUi(gt-md) {
+          max-height: 100px;
+        }
+
+        @include breakpointUi(lt-lg) {
+          line-height: 1;
+          margin-bottom: 10px;
+        }
+
+        @include breakpointUi(md) {
+          font-size: 100px;
+        }
+
+        @include breakpointUi(lt-md) {
+          font-size: 70px;
+        }
+      }
+
+      .sub {
+        @include text('secondary-light', 'xl');
+
+        @include breakpointUi(lt-md) {
+         @include text('secondary-light', 'md');
+        }
+      }
+    }
+  }
+
+  &__buttons-row {
+	display: flex;
+	gap: 20px;
+
+	@include breakpointUi(lt-md) {
+		flex-direction: column;
+		gap: 15px;
+	  }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+	flex-direction: column;
+	max-width: 415px;
+    margin: 0 auto;
+
+    @include breakpointUi(lt-md) {
+      gap: 15px;
+    }
+  }
+
+  &__button {
+    @include button('bg', 'button-violet');
+    position: relative;
+    text-decoration: none;
+
+    @include breakpointUi(lt-md) {
+      @include button('md', 'button-violet');
+      width: 100%;
+    }
+
+    &.complex-button {
+	  @include button('md', 'button-violet');
+	  padding: 1px;
+
+      span {
+        background: #0B3068;
+        display: flex;
+        padding: 0 44px;
+        align-items: center;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+
+        @include breakpointUi(lt-md) {
+          text-align: center;
+          display: block;
+          line-height: 48px;
+        }
+      }
+    }
+  }
+}
